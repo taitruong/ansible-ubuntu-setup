@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+
+  tasks:
+  - name: print test
+    shell: echo test
+  - name: apt update
+    apt: update_cache=yes
+    become: yes
+    become_method: sudo
