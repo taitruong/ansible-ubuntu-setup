@@ -91,3 +91,19 @@
     register: result
   - debug:
       var: result
+
+  - name: add idea repository
+    become: yes
+    apt_repository: repo="ppa:mmk2410/intellij-idea"
+    register: result
+  - debug:
+      var: result
+
+  - name: install idea ultimate
+    become: yes
+    become_method: sudo
+    apt:
+      name: intellij-idea-ultimate
+    register: result
+  - debug:
+      var: result
