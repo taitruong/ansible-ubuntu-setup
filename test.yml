@@ -2,6 +2,18 @@
 - hosts: localhost
 
   tasks:
+  - name: unlimited bash history size
+    shell: sed -i 's/HISTSIZE=1000/HISTSIZE=/g' ~/.bashrc
+    register: result
+  - debug:
+      var: result
+
+  - name: unlimited bash history file size
+    shell: sed -i 's/HISTFILESIZE=2000/HISTFILESIZE=/g' ~/.bashrc
+    register: result
+  - debug:
+      var: result
+
   - name: apt update
     become: yes
     become_method: sudo
