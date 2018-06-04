@@ -52,8 +52,10 @@
   - debug:
       var: result
 
-  - name: sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1397BC53640DB551
-    shell: sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1397BC53640DB551
+  - name: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1397BC53640DB551
+    become: yes
+    become_method: sudo
+    shell: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1397BC53640DB551
     register: result
   - debug:
       var: result
@@ -71,6 +73,21 @@
     become_method: sudo
     apt:
       name: vivaldi-stable
+    register: result
+  - debug:
+      var: result
+
+  - name: install default jdk (openjdk)
+    become: yes
+    become_method: sudo
+    apt:
+      name: default-jdk
+    register: resutt
+  - debug:
+      var: result
+
+  - name: java version
+    shell: java --version
     register: result
   - debug:
       var: result
