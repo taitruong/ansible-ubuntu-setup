@@ -41,13 +41,13 @@
   - debug: var=result
 
   - name: git user.email
-    shell: git config --global user.email maitai.truong@gmail.com
+    shell: git config --global user.email tai.truong@haufe-lexware.net
     register: result
   - debug:
       var: result
 
   - name: git user.name
-    shell: git config --global user.name "Tai Truong"
+    shell: git config --global user.name taitruong2
     register: result
   - debug:
       var: result
