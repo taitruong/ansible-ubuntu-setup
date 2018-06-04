@@ -2,9 +2,30 @@
 - hosts: localhost
 
   tasks:
-  - name: print test
-    shell: echo test
   - name: apt update
-    apt: update_cache=yes
     become: yes
     become_method: sudo
+    apt: 
+      update_cache: yes
+    register: result
+  - debug: var=result
+
+  - name: install git
+    apt: 
+      name: git
+      state: present
+    register: result
+  - debug: var=result
+
+  - name: git user.email
+    shell: git config --global user.email maitai.truong@gmail.com
+    register: result
+  - debug:
+      var: result
+
+  - name: git user.name
+    shell: git config --global user.name "Tai Truong"
+    remote_user: tt
+    register: result
+  - debug:
+      var: result
