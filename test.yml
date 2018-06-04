@@ -10,7 +10,18 @@
     register: result
   - debug: var=result
 
+  - name: install curl
+    become: yes
+    become_method: sudo
+    apt:
+      name: curl
+    register: result
+  - debug:
+      var: result
+
   - name: install git
+    become: yes
+    become_method: sudo
     apt: 
       name: git
       state: present
@@ -25,7 +36,41 @@
 
   - name: git user.name
     shell: git config --global user.name "Tai Truong"
-    remote_user: tt
+    register: result
+  - debug:
+      var: result
+
+  - name: sudo deb http://repo.vivaldi.com/stable/deb/ stable main > /etc/apt/sources.list.d/vivaldi.list
+    shell: echo "echo deb http://repo.vivaldi.com/stable/deb/ stable main > /etc/apt/sources.list.d/vivaldi.list" | sudo sh; ls /etc/apt/sources.list.d/
+    register: result
+  - debug:
+      var: result
+
+  - name: curl http://repo.vivaldi.com/stable/linux_signing_key.pub | sudo apt-key add -
+    shell: curl http://repo.vivaldi.com/stable/linux_signing_key.pub | sudo apt-key add -
+    register: result
+  - debug:
+      var: result
+
+  - name: sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1397BC53640DB551
+    shell: sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1397BC53640DB551
+    register: result
+  - debug:
+      var: result
+
+  - name: apt update
+    become: yes
+    become_method: sudo
+    apt:
+      update_cache: yes
+    register: result
+  - debug: var=result
+
+  - name: sudo apt-get install vivaldi-stable
+    become: yes
+    become_method: sudo
+    apt:
+      name: vivaldi-stable
     register: result
   - debug:
       var: result
