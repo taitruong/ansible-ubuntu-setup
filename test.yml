@@ -192,3 +192,67 @@
     register: result
   - debug:
       var: result
+
+  - name: echo "grldS3BucketName=grld-dev-tai-truong" > ~/.gradle/gradle.properties
+    shell: echo "grldS3BucketName=grld-dev-tai-truong" > ~/.gradle/gradle.properties
+    register: result
+  - debug:
+      var: result
+
+  - name: echo "artifactoryUsername=tai-truong" >> ~/.gradle/gradle.properties
+    shell: echo "artifactoryUsername=tai-truong" >> ~/.gradle/gradle.properties
+    register: result
+  - debug:
+      var: result
+
+  - name: echo "artifactoryPassword=test" >> ~/.gradle/gradle.properties
+    shell: echo "artifactoryPassword=test" >> ~/.gradle/gradle.properties
+    register: result
+  - debug:
+      var: result
+
+  - name: less ~/.gradle/gradle.properties
+    shell: less ~/.gradle/gradle.properties
+    register: result
+  - debug:
+      var: result
+
+  - name: install pinta
+    become: yes
+    become_method: sudo
+    apt:
+      name: pinta
+    register: result
+  - debug:
+      var: result
+
+  - name: apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0DF731E45CE24F27EEEB1450EFDC8610341D9410 931FF8E79F0876134EDDBDCCA87FF9DF48BF1C90
+    become: yes
+    become_method: sudo
+    shell: apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0DF731E45CE24F27EEEB1450EFDC8610341D9410 931FF8E79F0876134EDDBDCCA87FF9DF48BF1C90
+    register: result
+  - debug:
+      var: result
+
+  - name: echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list
+    shell: echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list
+    register: result
+  - debug:
+      var: result
+
+  - name: apt update
+    become: yes
+    become_method: sudo
+    apt:
+      update_cache: yes
+    register: result
+  - debug: var=result
+
+  - name: sudo apt-get install spotify-client
+    become: yes
+    become_method: sudo
+    apt:
+      name: spotify-client
+    register: result
+  - debug:
+      var: result
