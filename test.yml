@@ -170,15 +170,27 @@
   - debug:
       var: result
 
+# ubuntu 18.04, June 5th, 2018: vbguest needs latest vagrant
+# source: https://github.com/dotless-de/vagrant-vbguest/issues/292
   - name: install vagrant
     become: yes
     become_method: sudo
-    apt:
-      name: vagrant
+    shell: wget -c https://releases.hashicorp.com/vagrant/2.1.1/vagrant_2.1.1_x86_64.deb;dpkg -i vagrant_2.1.1_x86_64.deb; rm vagrant_2.1.1_x86_64.deb
     register: result
   - debug:
       var: result
 
+  - name: vagrant plugin install vagrant-vbguest
+    shell: vagrant plugin install vagrant-vbguest
+    register: result
+  - debug:
+      var: result
+
+  - name: vagrant plugin install vagrant-hosts
+    shell: vagrant plugin install vagrant-hosts
+    register: result
+  - debug:
+      var: result
 
   - name: apt-key adv --keyserver keyserver.ubuntu.com --recv 68576280
     become: yes
@@ -221,6 +233,14 @@
   - debug:
       var: result
 
+  - name: install maven
+    become: yes
+    become_method: sudo
+    apt:
+      name: maven
+    register: result
+  - debug:
+      var: result
 
   - name: add gradle repository
     become: yes
@@ -252,8 +272,8 @@
   - debug:
       var: result
 
-  - name: echo "artifactoryUsername=tai-truong" >> $HOME/.gradle/gradle.properties
-    shell: echo "artifactoryUsername=tai-truong" >> $HOME/.gradle/gradle.properties
+  - name: echo "artifactoryUsername=tai.truong" >> $HOME/.gradle/gradle.properties
+    shell: echo "artifactoryUsername=tai.truong" >> $HOME/.gradle/gradle.properties
     register: result
   - debug:
       var: result
@@ -325,4 +345,41 @@
     register: result
   - debug:
       var: result
+
+  - name: cp grld-provisioning/vagrant-multihost/enviroment.rb
+    shell: cp $HOME/data/040_development/100_lexoffice/grld-provisioning/vagrant-multihost/_enviroment.rb $HOME/data/040_development/100_lexoffice/grld-provisioning/vagrant-multihost/enviroment.rb
+    register: result
+  - debug:
+      var: result
+
+  - name: REPO_ROOT_FOLDER - grld-provisioning/vagrant-multihost/enviroment.rb
+    shell: sed -i 's/.*REPO_ROOT_FOLDER = .*/  REPO_ROOT_FOLDER = '\''\/home\/tt\/data\/040_development\/100_lexoffice'\''/g' $HOME/data/040_development/100_lexoffice/grld-provisioning/vagrant-multihost/enviroment.rb
+    register: result
+  - debug:
+      var: result
+
+  - name: AWS_BUCKET_NAME - grld-provisioning/vagrant-multihost/enviroment.rb
+    shell: sed -i 's/.*AWS_BUCKET_NAME = .*/  AWS_BUCKET_NAME = '\''grld-dev-tai-truong'\''/g' $HOME/data/040_development/100_lexoffice/grld-provisioning/vagrant-multihost/enviroment.rb
+    register: result
+  - debug:
+      var: result
+
+  - name: cp .m2/settings.xml
+    shell: mkdir $HOME/.m2;cp $HOME/data/040_development/100_lexoffice/grld-provisioning/vagrant-multihost/grld-dev-vagrant/maven/_settings.xml $HOME/.m2/settings.xml
+    register: result
+  - debug:
+      var: result
+
+  - name: set USER - $HOME/.m2/settings.xml
+    shell: sed -i 's/<username>.*<\/username>/<username>tai.truong<\/username>/g' $HOME/.m2/settings.xml
+    register: result
+  - debug:
+      var: result
+
+  - name: set PASSWORD - $HOME/.m2/settings.xml
+    shell: sed -i 's/<password>.*<\/password>/<password>PASSWORDxxxxxx<\/password>/g' $HOME/.m2/settings.xml
+    register: result
+  - debug:
+      var: result
+
 # --------------------------------------------------------
