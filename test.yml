@@ -2,6 +2,14 @@
 - hosts: localhost
 
   tasks:
+  - name: create /etc/profile.d/export-histtime.sh
+    become: yes
+    become_method: sudo
+    shell: echo "export HISTTIMEFORMAT='%Y%m%d %T'" > /etc/profile.d/export-histtime.sh
+    register: result
+  - debug:
+      var: result
+
   - name: unlimited bash history size
     shell: sed -i 's/HISTSIZE=1000/HISTSIZE=/g' ~/.bashrc
     register: result
@@ -21,6 +29,27 @@
       update_cache: yes
     register: result
   - debug: var=result
+
+  - name: chmod 700 ~/.ssh/id_rsa
+    shell: ls -al ~/.ssh/id_rsa;chmod 700 ~/.ssh/id_rsa;ls -al ~/.ssh/id_rsa
+    register: result
+  - debug:
+      var: result
+
+#  - name: ssh-add for bitbucket
+#    shell: ssh-add ~/.ssh/id_rsa
+#    register: result
+#  - debug:
+#      var: result
+
+  - name: install libgxps-utils for xps2pdf conversion
+    become: yes
+    become_method: sudo
+    apt:
+      name: libgxps-utils
+    register: result
+  - debug:
+      var: result
 
   - name: install curl
     become: yes
