@@ -18,13 +18,13 @@
       var: result
 
   - name: set JAVA_HOME in .bashrc
-    shell: grep -q -F 'JAVA_HOME=' ~/.bashrc || echo 'JAVA_HOME=/usr/lib/jvm/default-java' >> ~/.bashrc;grep -q -F 'export JAVA_HOME' ~/.bashrc || echo 'export JAVA_HOME' >> ~/.bashrc
+    shell: grep -q -F 'JAVA_HOME=' $HOME/.bashrc || echo 'JAVA_HOME=/usr/lib/jvm/default-java' >> $HOME/.bashrc;grep -q -F 'export JAVA_HOME' $HOME/.bashrc || echo 'export JAVA_HOME' >> $HOME/.bashrc
     register: result
   - debug:
       var: result
 
   - name: set PATH in .bashrc
-    shell: grep -q -F 'PATH=$PATH' ~/.bashrc || echo 'PATH=$PATH:$JAVA_HOME:/home/ttruong/data/040_development/100_lexoffice/grld-provisioning/vagrant-multihost/scripts:$HOME/data/040_development/rerun' >> ~/.bashrc;grep -q -F 'export PATH' ~/.bashrc || echo 'export PATH' >> ~/.bashrc
+    shell: grep -q -F 'PATH=$PATH' $HOME/.bashrc || echo 'PATH=$PATH:$JAVA_HOME:$HOME/data/040_development/100_lexoffice/grld-provisioning/vagrant-multihost/scripts:$HOME/data/040_development/rerun' >> $HOME/.bashrc;grep -q -F 'export PATH' $HOME/.bashrc || echo 'export PATH' >> $HOME/.bashrc
     register: result
   - debug:
       var: result
@@ -38,13 +38,13 @@
       var: result
 
   - name: unlimited bash history size
-    shell: sed -i 's/HISTSIZE=1000/HISTSIZE=/g' ~/.bashrc
+    shell: sed -i 's/HISTSIZE=1000/HISTSIZE=/g' $HOME/.bashrc
     register: result
   - debug:
       var: result
 
   - name: unlimited bash history file size
-    shell: sed -i 's/HISTFILESIZE=2000/HISTFILESIZE=/g' ~/.bashrc
+    shell: sed -i 's/HISTFILESIZE=2000/HISTFILESIZE=/g' $HOME/.bashrc
     register: result
   - debug:
       var: result
@@ -57,14 +57,14 @@
     register: result
   - debug: var=result
 
-  - name: chmod 700 ~/.ssh/id_rsa
-    shell: ls -al ~/.ssh/id_rsa;chmod 700 ~/.ssh/id_rsa;ls -al ~/.ssh/id_rsa
+  - name: chmod 700 $HOME/.ssh/id_rsa
+    shell: ls -al $HOME/.ssh/id_rsa;chmod 700 $HOME/.ssh/id_rsa;ls -al $HOME/.ssh/id_rsa
     register: result
   - debug:
       var: result
 
 #  - name: ssh-add for bitbucket
-#    shell: ssh-add ~/.ssh/id_rsa
+#    shell: ssh-add $HOME/.ssh/id_rsa
 #    register: result
 #  - debug:
 #      var: result
@@ -246,26 +246,26 @@
   - debug:
       var: result
 
-  - name: echo "grldS3BucketName=grld-dev-tai-truong" > ~/.gradle/gradle.properties
-    shell: echo "grldS3BucketName=grld-dev-tai-truong" > ~/.gradle/gradle.properties
+  - name: echo "grldS3BucketName=grld-dev-tai-truong" > $HOME/.gradle/gradle.properties
+    shell: echo "grldS3BucketName=grld-dev-tai-truong" > $HOME/.gradle/gradle.properties
     register: result
   - debug:
       var: result
 
-  - name: echo "artifactoryUsername=tai-truong" >> ~/.gradle/gradle.properties
-    shell: echo "artifactoryUsername=tai-truong" >> ~/.gradle/gradle.properties
+  - name: echo "artifactoryUsername=tai-truong" >> $HOME/.gradle/gradle.properties
+    shell: echo "artifactoryUsername=tai-truong" >> $HOME/.gradle/gradle.properties
     register: result
   - debug:
       var: result
 
-  - name: echo "artifactoryPassword=test" >> ~/.gradle/gradle.properties
-    shell: echo "artifactoryPassword=test" >> ~/.gradle/gradle.properties
+  - name: echo "artifactoryPassword=test" >> $HOME/.gradle/gradle.properties
+    shell: echo "artifactoryPassword=testtest" >> $HOME/.gradle/gradle.properties
     register: result
   - debug:
       var: result
 
-  - name: less ~/.gradle/gradle.properties
-    shell: less ~/.gradle/gradle.properties
+  - name: less $HOME/.gradle/gradle.properties
+    shell: less $HOME/.gradle/gradle.properties
     register: result
   - debug:
       var: result
