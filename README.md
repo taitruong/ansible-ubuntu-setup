@@ -18,3 +18,8 @@ sudo apt-get install ansible
 ```
 ansible-playbook -K test.yml
 ```
+
+# Open Issues/ToDo
+
+- IntelliJ IDEA
+-- install plugins currently manually, possible solution: https://galaxy.ansible.com/gantsign/intellij/ 
