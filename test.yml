@@ -170,32 +170,6 @@
   - debug:
       var: result
 
-  - name: install virtualbox-dkms
-    become: yes
-    become_method: sudo
-    apt:
-      name: virtualbox-dkms
-    register: result
-  - debug:
-      var: result
-
-  - name: apt install linux-headers-$(uname -r) #build-essential dkms
-    become: yes
-    become_method: sudo
-    shell: apt install linux-headers-$(uname -r) #build-essential dkms
-    register: result
-  - debug:
-      var: result
-
-  # reconfigure dkms - https://askubuntu.com/a/513655
-  - name: reconfigure dkms
-    become: yes
-    become_method: sudo
-    shell: dpkg-reconfigure virtualbox-dkms
-    register: result
-  - debug:
-      var: result
-
   - name: install vagrant
     become: yes
     become_method: sudo
