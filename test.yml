@@ -340,6 +340,14 @@
       var: result
 
 # ------------- lexoffice repo configuration -------------
+  - name: install awscli
+    become: yes
+    become_method: sudo
+    apt:
+      name: awscli
+    register: result
+  - debug:
+      var: result
   - name: REPO_DIR - grld-provisioning/vagrant-multihost/scripts/environment.sh
     shell: sed -i 's/.*export REPO_DIR=.*/export REPO_DIR=$HOME\/data\/040_development\/100_lexoffice/g' /home/tt/data/040_development/100_lexoffice/grld-provisioning/vagrant-multihost/scripts/environment.sh
     register: result

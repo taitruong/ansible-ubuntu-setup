@@ -23,3 +23,6 @@ ansible-playbook -K test.yml
 
 - IntelliJ IDEA
 -- install plugins currently manually, possible solution: https://galaxy.ansible.com/gantsign/intellij/ 
+
+- AWS
+  - aws configure with access key and secret key
