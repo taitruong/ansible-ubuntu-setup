@@ -2,23 +2,23 @@
 - hosts: localhost
 
   tasks:
-  - name: install default jdk (openjdk)
+  - name: install openjdk-8-jdk
     become: yes
     become_method: sudo
     apt:
-      name: default-jdk
+      name: openjdk-8-jdk
     register: resutt
   - debug:
       var: result
 
   - name: java version
-    shell: java --version
+    shell: java -version
     register: result
   - debug:
       var: result
 
   - name: set JAVA_HOME in .bashrc
-    shell: grep -q -F 'JAVA_HOME=' $HOME/.bashrc || echo 'JAVA_HOME=/usr/lib/jvm/default-java' >> $HOME/.bashrc;grep -q -F 'export JAVA_HOME' $HOME/.bashrc || echo 'export JAVA_HOME' >> $HOME/.bashrc
+    shell: grep -q -F 'JAVA_HOME=' $HOME/.bashrc || echo 'JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' >> $HOME/.bashrc;grep -q -F 'export JAVA_HOME' $HOME/.bashrc || echo 'export JAVA_HOME' >> $HOME/.bashrc
     register: result
   - debug:
       var: result
