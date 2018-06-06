@@ -17,6 +17,17 @@
   - debug:
       var: result
 
+# due to ubuntu 18.04 or openjdk 9 and later the keystore in /etc/ssl/certs/java/cacerts does not work ("InvalidAlgorithmParameterException: the trustAnchors parameter must be non-empty")
+# solution: rm cacerts and update
+# source: https://bugs.launchpad.net/ubuntu/+source/ca-certificates-java/+bug/1739631
+  - name: update java keystore
+    become: yes
+    become_method: sudo
+    shell: rm /etc/ssl/certs/java/cacerts;update-ca-certificates -f
+    register: result
+  - debug:
+      var: result
+
   - name: set JAVA_HOME in .bashrc
     shell: grep -q -F 'JAVA_HOME=' $HOME/.bashrc || echo 'JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' >> $HOME/.bashrc;grep -q -F 'export JAVA_HOME' $HOME/.bashrc || echo 'export JAVA_HOME' >> $HOME/.bashrc
     register: result
@@ -348,6 +359,13 @@
     register: result
   - debug:
       var: result
+
+  - name: cp grld-provisioning/vagrant-multihost/scripts/environment.sh
+    shell: cp $HOME/data/040_development/100_lexoffice/grld-provisioning/vagrant-multihost/scripts/_environment.sh $HOME/data/040_development/100_lexoffice/grld-provisioning/vagrant-multihost/scripts/environment.sh
+    register: result
+  - debug:
+      var: result
+
   - name: REPO_DIR - grld-provisioning/vagrant-multihost/scripts/environment.sh
     shell: sed -i 's/.*export REPO_DIR=.*/export REPO_DIR=$HOME\/data\/040_development\/100_lexoffice/g' /home/tt/data/040_development/100_lexoffice/grld-provisioning/vagrant-multihost/scripts/environment.sh
     register: result
