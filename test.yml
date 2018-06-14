@@ -147,11 +147,20 @@
     register: result
   - debug: var=result
 
-  - name: sudo apt-get install vivaldi-stable
+  - name: install vivaldi-stable
     become: yes
     become_method: sudo
     apt:
       name: vivaldi-stable
+    register: result
+  - debug:
+      var: result
+
+  - name: install pgadmin3
+    become: yes
+    become_method: sudo
+    apt:
+      name: pgadmin3
     register: result
   - debug:
       var: result
@@ -332,7 +341,7 @@
     register: result
   - debug: var=result
 
-  - name: sudo apt-get install spotify-client
+  - name: install spotify-client
     become: yes
     become_method: sudo
     apt:
