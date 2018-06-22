@@ -253,6 +253,14 @@
   - debug:
       var: result
 
+  - name: append registry to $HOME/.npmrc
+    become: yes
+    become_method: sudo
+    shell: grep -q -F 'registry=https://blueocean.jfrog.io/blueocean/api/npm/lxo-npm/' $HOME/.npmrc || echo 'registry=https://blueocean.jfrog.io/blueocean/api/npm/lxo-npm/' >> $HOME/.npmrc
+    register: result
+  - debug:
+      var: result
+
   - name: install maven
     become: yes
     become_method: sudo
