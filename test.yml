@@ -89,6 +89,24 @@
   - debug:
       var: result
 
+  # -------- atom ------------------
+
+  - name: add atom repository
+    become: yes
+    apt_repository: repo="ppa:webupd8team/atom"
+    register: result
+  - debug:
+      var: result
+
+  - name: install atom
+    become: yes
+    become_method: sudo
+    apt:
+      name: atom
+    register: result
+  - debug:
+      var: result
+
   # -------- install jekyll --------
   # see here: https://jekyllrb.com/docs/installation/#ubuntu
 
