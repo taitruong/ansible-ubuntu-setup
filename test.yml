@@ -89,6 +89,38 @@
   - debug:
       var: result
 
+  # -------- install jekyll --------
+  # see here: https://jekyllrb.com/docs/installation/#ubuntu
+
+  # step 1: install ruby
+  - name: sudo apt-get install ruby ruby-dev build-essential
+    become: yes
+    become_method: sudo
+    apt:
+      name: ruby ruby-dev build-essential
+    register: result
+  - debug:
+      var: result
+
+  # step 2: add these lines to ~/.bashrc:
+  # # Install Ruby Gems to ~/gems
+  # export GEM_HOME=$HOME/gems
+  # PATH=$HOME/gems/bin:....
+  - name: set PATH=$HOME/gems/bin in $HOME/.bashrc
+    shell: grep 'PATH=$HOME/gems/bin' ~/.bashrc || sed -i 's/PATH=/\n# Install Ruby Gems to ~\/gems\nexport GEM_HOME=$HOME\/gems\nPATH=$HOME\/gems\/bin:/g' $HOME/.bashrc
+    register: result
+  - debug:
+      var: result
+
+  # step 3: install jekyll
+
+  - name: set PATH=$HOME/gems/bin in $HOME/.bashrc
+    shell: gem install jekyll bundler
+    register: result
+  - debug:
+      var: result
+  # ---------------------------------
+
   - name: install curl
     become: yes
     become_method: sudo
