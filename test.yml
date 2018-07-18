@@ -2,6 +2,15 @@
 - hosts: localhost
 
   tasks:
+  - name: install imagemagick
+    become: yes
+    become_method: sudo
+    apt:
+      name: imagemagick
+    register: resutt
+  - debug:
+      var: result
+
   - name: install openjdk-8-jdk
     become: yes
     become_method: sudo
