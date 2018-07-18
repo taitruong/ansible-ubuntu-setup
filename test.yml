@@ -2,6 +2,15 @@
 - hosts: localhost
 
   tasks:
+  - name: install vlc
+    become: yes
+    become_method: sudo
+    apt:
+      name: vlc
+    register: resutt
+  - debug:
+      var: result
+
   - name: install imagemagick
     become: yes
     become_method: sudo
