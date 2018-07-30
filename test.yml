@@ -258,6 +258,12 @@
   - debug:
       var: result
 
+  - name: set inotify watch limit in /etc/sysctl.conf for IDEA # source: https://confluence.jetbrains.com/display/IDEADEV/Inotify+Watches+Limit
+    shell: grep -q -F 'fs.inotify.max_user_watches' /etc/sysctl.conf || echo 'fs.inotify.max_user_watches=524288' | sudo tee --append /etc/sysctl.conf;sudo sysctl -p --system
+    register: result
+  - debug:
+      var: result
+
   - name: install virtual box
     become: yes
     become_method: sudo
