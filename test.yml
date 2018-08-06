@@ -38,6 +38,15 @@
   - debug:
       var: result
 
+  - name: install openjdk-8-source
+    become: yes
+    become_method: sudo
+    apt:
+      name: openjdk-8-source
+    register: resutt
+  - debug:
+      var: result
+
   - name: java version
     shell: java -version
     register: result
