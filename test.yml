@@ -251,14 +251,14 @@
   - debug:
       var: result
 
-  # source: https://askubuntu.com/a/895790
+  # source: https://askubuntu.com/a/895790, visual studio code steps: add repo, key, update and install
   - name: add visual studio code repository
     become: yes
     apt_repository: repo="deb https://packages.microsoft.com/repos/vscode stable main"
     register: result
   - debug:
       var: result
-
+  # visual studio code: add key
   - name: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EB3E94ADBE1229CF
     become: yes
     become_method: sudo
@@ -266,7 +266,7 @@
     register: result
   - debug:
       var: result
-
+  # visual studio code: update
   - name: apt update
     become: yes
     become_method: sudo
@@ -274,7 +274,7 @@
       update_cache: yes
     register: result
   - debug: var=result
-
+  # visual studio code: install
   - name: install visual studio code
     become: yes
     become_method: sudo
@@ -337,6 +337,7 @@
   - debug:
       var: result
 
+  # --------- install node, including npm
   - name: apt-key adv --keyserver keyserver.ubuntu.com --recv 68576280
     become: yes
     become_method: sudo
@@ -385,6 +386,18 @@
     register: result
   - debug:
       var: result
+
+  # installations via npm
+
+  - name: npm install -g typescript
+    become: yes
+    become_method: sudo
+    shell: npm install -g typescript
+    register: result
+  - debug:
+      var: result
+
+  # --------- end
 
   - name: install maven
     become: yes
