@@ -397,6 +397,14 @@
   - debug:
       var: result
 
+  - name: npm install -g @angular/cli
+    become: yes
+    become_method: sudo
+    shell: npm install -g @angular/cli
+    register: result
+  - debug:
+      var: result
+
   # --------- end
 
   - name: install maven
