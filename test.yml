@@ -242,6 +242,56 @@
   - debug:
       var: result
 
+  # --------- install docker, source: docs.docker.com/v17.09/engine/installation/linux/docker-ce/ubuntu/#set-up-the-repository
+  - name: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    register: result
+  - debug:
+      var: result
+
+  - name: add docker repository
+    become: yes
+    apt_repository: repo="deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+    register: result
+  - debug:
+      var: result
+
+  - name: apt update
+    become: yes
+    become_method: sudo
+    apt:
+      update_cache: yes
+    register: result
+  - debug: var=result
+
+  - name: install docker-ce
+    become: yes
+    become_method: sudo
+    apt:
+      name: docker-ce
+    register: result
+  - debug:
+      var: result
+
+  - name: install docker-compose
+    become: yes
+    become_method: sudo
+    apt:
+      name: docker-compose
+    register: result
+  - debug:
+      var: result
+
+  - name: run docker without sudo # source: www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04
+    become: yes
+    become_method: sudo
+    shell: sudo usermod -aG docker ${USER}
+    register: result
+  - debug:
+      var: result
+
+  # --------- end
+
   - name: install pgadmin3
     become: yes
     become_method: sudo
@@ -258,6 +308,7 @@
     register: result
   - debug:
       var: result
+
   # visual studio code: add key
   - name: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EB3E94ADBE1229CF
     become: yes
